@@ -1,0 +1,173 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --background: #FFFFFF;
+  --foreground: #0D1F17;
+  --card: #FFFFFF;
+  --card-foreground: #0D1F17;
+  --popover: #FFFFFF;
+  --popover-foreground: #0D1F17;
+  --primary: #1A8A5A;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F8FAF9;
+  --secondary-foreground: #0D1F17;
+  --muted: #F0F4F2;
+  --muted-foreground: #8FA69C;
+  --accent: #E8F5EE;
+  --accent-foreground: #0A4D32;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: #E2EAE6;
+  --input: #E2EAE6;
+  --input-background: #F8FAF9;
+  --switch-background: #E2EAE6;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #1A8A5A;
+  --chart-1: #1A8A5A;
+  --chart-2: #16A34A;
+  --chart-3: #2563EB;
+  --chart-4: #D97706;
+  --chart-5: #DC2626;
+  --radius: 0.625rem;
+
+  --color-accent-500: #1A8A5A;
+  --color-accent-600: #0F6B45;
+  --color-accent-50: #E8F5EE;
+  --color-accent-100: #B3DFC8;
+  --color-accent-900: #0A4D32;
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F8FAF9;
+  --color-bg-tertiary: #F0F4F2;
+  --color-border-default: #E2EAE6;
+  --color-text-primary: #0D1F17;
+  --color-text-secondary: #4A6358;
+  --color-text-muted: #8FA69C;
+
+  --sidebar: #F8FAF9;
+  --sidebar-foreground: #0D1F17;
+  --sidebar-primary: #1A8A5A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #E8F5EE;
+  --sidebar-accent-foreground: #0A4D32;
+  --sidebar-border: #E2EAE6;
+  --sidebar-ring: #1A8A5A;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-family: var(--font-heading);
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+  }
+
+  h2 {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-family: var(--font-heading);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+
+  h4 {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+
+  label {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  button {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  input {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+}

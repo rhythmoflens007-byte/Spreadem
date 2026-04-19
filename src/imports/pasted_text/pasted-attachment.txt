@@ -1,0 +1,303 @@
+TASK: Wire all prototype connections for the SpreadEm product across all generated frames.
+Use Smart Animate as the default transition unless a specific animation is declared below.
+Default trigger on all connections: On Click.
+Default easing: easeOut. Default duration: 300ms unless stated.
+
+All frame names follow the convention: [ROLE] / [PageName] / [Variant]
+Use exact frame names as listed below. Do not create new frames.
+
+═══════════════════════════════════════
+PUBLIC NAVIGATION FLOW
+═══════════════════════════════════════
+
+FROM: Public / Landing / Desktop
+  → "Campaigns" nav link           → Public / CampaignFeed / Desktop
+    transition: Push Left, 300ms easeOut
+  → "Get Started" button           → Auth / Signup / Desktop
+    transition: Push Left, 300ms easeOut
+  → "Sign In" nav link             → Auth / Login / Desktop
+    transition: Push Left, 300ms easeOut
+  → "Join Campaign" card CTA       → Auth / Signup / Desktop (if unauthenticated)
+    transition: Modal Open — scale 0.96→1, opacity 0→1, 200ms easeOut
+  → "How it works" nav link        → scroll anchor on same frame (no transition)
+  → "Post a Campaign →" CTA banner → Auth / Signup / Desktop
+  → "Start Earning →" CTA banner   → Auth / Signup / Desktop
+  → Any niche tile click           → Public / CampaignFeed / Desktop
+    transition: Push Left, 300ms easeOut
+
+FROM: Public / CampaignFeed / Desktop
+  → "Join Campaign" card CTA (unauth) → Auth / Signup / Desktop
+    transition: overlay modal, Modal Open 200ms
+  → "Sign up as creator →" in modal   → Auth / Signup / Desktop
+    transition: Push Left
+
+═══════════════════════════════════════
+AUTH FLOW
+═══════════════════════════════════════
+
+FROM: Auth / Signup / Desktop
+  → Brand card selected + "Start your first campaign →"  → Onboarding / Brand / Desktop
+    transition: Push Left, 350ms easeOut
+  → Creator card selected + "Apply as a creator →"       → Onboarding / Creator / Desktop
+    transition: Push Left, 350ms easeOut
+  → "Sign in →" footer link                              → Auth / Login / Desktop
+    transition: Push Left, 200ms
+
+FROM: Auth / Login / Desktop
+  → "Sign In →" CTA (brand approved)    → Brand / Dashboard / Desktop
+    transition: Push Left, 400ms easeOut
+  → "Sign In →" CTA (creator approved)  → Creator / Dashboard / Desktop
+    transition: Push Left, 400ms easeOut
+  → "Sign In →" CTA (pending/rejected)  → System / Pending / Desktop
+    transition: Push Left, 300ms
+  → "Forgot password?" link             → Auth / ForgotPassword / Desktop
+    transition: Push Left, 200ms
+  → "Create an account →" footer        → Auth / Signup / Desktop
+    transition: Push Left, 200ms
+  → Error state: wrong password         → Auth / Login / ErrorWrongPassword variant
+    transition: Smart Animate + shake (translateX ±4px, 3 cycles, 300ms)
+  → Error state: not found              → Auth / Login / ErrorNotFound variant
+    transition: Smart Animate + shake
+  → Error state: pending                → Auth / Login / ErrorPending variant
+    transition: Smart Animate, 200ms
+
+FROM: Auth / ForgotPassword / Desktop
+  → "Send Reset Link →"   → Auth / ForgotPassword / SuccessState variant
+    transition: Smart Animate, opacity+translateY, 300ms easeOut
+  → "Back to Sign In"     → Auth / Login / Desktop
+    transition: Push Right, 200ms
+
+FROM: Auth / VerifyEmail / Desktop
+  → "Back to Sign In"     → Auth / Login / Desktop
+    transition: Push Right
+
+FROM: Auth / SessionExpired / Desktop
+  → "Sign In Again →"     → Auth / Login / Desktop
+    transition: Push Left
+
+═══════════════════════════════════════
+ONBOARDING FLOW
+═══════════════════════════════════════
+
+FROM: Onboarding / Brand / Desktop
+  → "Submit for Review →" CTA   → System / Pending / Desktop
+    transition: Push Left, 350ms easeOut
+  → File upload zone (dragover)  → same frame variant with dashed border accent-500
+    transition: Smart Animate, 150ms
+
+FROM: Onboarding / Creator / Desktop
+  → "Submit for Review →" CTA   → System / Pending / Desktop
+    transition: Push Left, 350ms easeOut
+
+FROM: System / Pending / Desktop
+  → "Sign Out"                  → Auth / Login / Desktop
+    transition: Push Right, 300ms
+  → "Contact us" (rejected)     → external email link (no frame transition)
+
+═══════════════════════════════════════
+BRAND APP FLOW
+═══════════════════════════════════════
+
+FROM: Brand / Dashboard / Desktop
+  → "Create Campaign →" header CTA    → Brand / CreateCampaign / Step1
+    transition: Push Left, 350ms easeOut
+  → FAB "+ Start a Campaign"          → Brand / CreateCampaign / Step1
+    transition: Push Left, 350ms easeOut
+  → Table row "View →" link           → Brand / CampaignDetail / Desktop
+    transition: Push Left, 300ms
+  → "Find Creators" navbar link       → Brand / FindCreators / Desktop
+    transition: Push Left
+  → "Live Campaigns" navbar link      → Public / CampaignFeed / Desktop
+    transition: Push Left
+  → "My Campaigns" navbar link        → Brand / CampaignList / Desktop
+    transition: Push Left
+  → Bell icon                         → overlay: Notifications / Dropdown
+    transition: dropdown — translateY -8px→0, opacity 0→1, 200ms easeOut
+  → Avatar click                      → overlay: Brand / AccountDropdown
+    transition: dropdown — translateY -8px→0, opacity 0→1, 200ms
+  → "+ New Campaign" navbar button    → Brand / CreateCampaign / Step1
+    transition: Push Left
+
+FROM: Brand / AccountDropdown (overlay)
+  → "Brand Profile"            → Brand / AccountSettings / Desktop
+  → "My Campaigns"             → Brand / CampaignList / Desktop
+  → "Billing & Payments"       → Brand / AccountSettings / BillingTab
+  → "Notification Settings"    → Brand / AccountSettings / NotificationsTab
+  → "Account Settings"         → Brand / AccountSettings / SecurityTab
+  → "Help & Support"           → System / Help / Desktop
+  → "Sign Out" (red)           → Auth / Login / Desktop
+    transition: Push Right, 300ms
+  All above: transition Push Left 300ms unless stated
+
+FROM: Brand / CampaignList / Desktop
+  → "Create Campaign →"        → Brand / CreateCampaign / Step1
+    transition: Push Left
+  → Table row "View →"         → Brand / CampaignDetail / Desktop
+    transition: Push Left
+
+FROM: Brand / CreateCampaign / Step1
+  → "Next: Set your budget →"  → Brand / CreateCampaign / Step2
+    transition: Smart Animate — content slides out left (translateX 0→-40px opacity 0) then Step2 slides in right (translateX 40px→0 opacity 1), 300ms easeOut. Progress bar fills from step 1 to step 2 (300ms ease).
+
+FROM: Brand / CreateCampaign / Step2
+  → "Next: Review & submit →"  → Brand / CreateCampaign / Step3
+    transition: same directional slide + progress bar fills to step 3
+  → "Back" (step indicator)    → Brand / CreateCampaign / Step1
+    transition: reverse slide (Push Right)
+
+FROM: Brand / CreateCampaign / Step3
+  → "Lock budget & go live →"  → Brand / Payment / Processing
+    transition: Push Left, 400ms easeOut
+  → Success modal appears      → Brand / CreateCampaign / SuccessModal overlay
+    transition: Modal Open — scale 0.96→1 opacity 0→1, 200ms easeOut
+  → "Go to Dashboard →" in modal → Brand / Dashboard / Desktop
+    transition: Push Left, 400ms
+
+FROM: Brand / Payment / Processing
+  → Auto (webhook success)     → Brand / Payment / Success
+    transition: page-enter — opacity 0→1 translateY 20px→0, 400ms easeOut
+  → Auto (webhook fail)        → Brand / Payment / Failed
+    transition: page-enter, 400ms
+  Note: use a 3-second delay timer on Processing frame to simulate both states in prototype
+
+FROM: Brand / Payment / Success
+  → "Go to Dashboard →"        → Brand / Dashboard / Desktop
+    transition: Push Left
+  → "View Campaign"            → Brand / CampaignDetail / Desktop
+    transition: Push Left
+
+FROM: Brand / Payment / Failed
+  → "Try Again →"              → Brand / CreateCampaign / Step3
+    transition: Push Right
+  → "Contact Support"          → System / Help / Desktop
+
+FROM: Brand / CampaignDetail / Desktop
+  → "← My Campaigns" back nav → Brand / CampaignList / Desktop
+    transition: Push Right, 300ms
+  → "Resend payment link →"    → same frame (toast appears: Toast/Info)
+    transition: Smart Animate, toast-slide 300ms
+
+FROM: Brand / FindCreators / Desktop
+  → Creator card "Invite to Campaign →" → overlay modal: Invite to Campaign modal
+    transition: Modal Open 200ms
+
+FROM: Brand / AccountSettings / Desktop
+  → Tab: Profile / Billing / Notifications / Security
+    transition: Smart Animate, opacity 0→1, 200ms (content swap only, tabs don't slide)
+  → "Change Password" button   → overlay: Change Password Modal
+    transition: Modal Open 200ms
+  → "Delete Account" danger    → overlay: Delete Confirm Modal
+    transition: Modal Open 200ms
+
+═══════════════════════════════════════
+CREATOR APP FLOW
+═══════════════════════════════════════
+
+FROM: Creator / Dashboard / Desktop
+  → "Browse Campaigns →" CTA       → Creator / Browse / Desktop
+    transition: Push Left, 350ms
+  → "Total Earned" stat card click → Creator / Earnings / Desktop
+    transition: Push Left, 300ms
+  → Table row "Action" link        → Creator / CampaignDetail / Desktop
+    transition: Push Left
+  → "Browse Campaigns" navbar      → Creator / Browse / Desktop
+  → "My Submissions" navbar        → Creator / Submissions / Desktop
+  → Bell icon                      → overlay: Notifications / Dropdown
+    transition: dropdown 200ms
+  → Avatar click                   → overlay: Creator / AccountDropdown
+    transition: dropdown 200ms
+
+FROM: Creator / AccountDropdown (overlay)
+  → "My Profile"             → Creator / AccountSettings / Desktop
+  → "My Submissions"         → Creator / Submissions / Desktop
+  → "Earnings & Payouts"     → Creator / Earnings / Desktop
+  → "Notification Settings"  → Creator / AccountSettings / NotificationsTab
+  → "Account Settings"       → Creator / AccountSettings / SecurityTab
+  → "Help & Support"         → System / Help / Desktop
+  → "Sign Out" (red)         → Auth / Login / Desktop
+    transition: Push Right
+
+FROM: Creator / Browse / Desktop
+  → Campaign card "View Brief →"  → Creator / CampaignDetail / Desktop
+    transition: Push Left, 300ms
+  → Search bar focus               → same frame: search dropdown appears
+    transition: Smart Animate, dropdown slides down 200ms
+
+FROM: Creator / CampaignDetail / Desktop
+  → "← Browse Campaigns" back     → Creator / Browse / Desktop
+    transition: Push Right, 300ms
+  → "Submit Content →" CTA        → overlay: Submit Content Modal
+    transition: Modal Open — scale 0.96→1, opacity 0→1, 200ms easeOut
+  → "Submit for Review →" in modal → Creator / CampaignDetail / SubmittedState variant
+    transition: Modal closes (reverse modal-open 150ms) then right sidebar Smart Animates to Submitted state (300ms)
+
+FROM: Creator / Submissions / Desktop
+  → Table row link                 → Creator / CampaignDetail / Desktop
+    transition: Push Left
+  → "Browse Campaigns →" empty CTA → Creator / Browse / Desktop
+
+FROM: Creator / Earnings / Desktop
+  → Payout history row click       → overlay: Payout Detail Modal
+    transition: Modal Open 200ms
+  → "Browse →" empty CTA          → Creator / Browse / Desktop
+
+FROM: Creator / AccountSettings / Desktop
+  → Tab switching                  → Smart Animate content swap, 200ms
+  → "Change Password"              → overlay: Change Password Modal
+  → "Delete Account"               → overlay: Delete Confirm Modal
+
+═══════════════════════════════════════
+NOTIFICATIONS + SYSTEM FLOW
+═══════════════════════════════════════
+
+FROM: Notifications / Centre / Desktop
+  → Filter tabs (All/Unread/Campaigns/Payouts) → Smart Animate content swap, 200ms
+  → Campaign notification click    → relevant Brand or Creator campaign detail frame
+  → Payout notification click      → Creator / Earnings / Desktop
+
+FROM: Notifications / Dropdown (overlay)
+  → "View all →" link              → Notifications / Centre / Desktop
+    transition: dropdown closes, Push Left 300ms
+  → Any item click                 → relevant destination frame
+
+FROM: System / 404 / Desktop
+  → "Go Home"                      → Public / Landing / Desktop
+    transition: Push Left
+  → "Go to Dashboard"              → Brand / Dashboard or Creator / Dashboard
+    transition: Push Left
+
+FROM: System / Unauthorized / Desktop
+  → "Go to my Dashboard"           → role-appropriate dashboard
+  → "Sign in with different account" → Auth / Login / Desktop
+
+═══════════════════════════════════════
+MOBILE DRAWER CONNECTIONS (all mobile frames)
+═══════════════════════════════════════
+
+Hamburger icon on any mobile frame:
+  → opens Mobile / Drawer / Brand or Mobile / Drawer / Creator overlay
+    transition: translateX(-280px)→translateX(0), 300ms easeOut
+    backdrop: opacity 0→0.4, 200ms
+    hamburger icon morphs to X, 200ms
+    nav links stagger in: 40ms per link
+
+Mobile Drawer backdrop tap OR X button:
+  → closes drawer back to originating frame
+    transition: translateX(0)→translateX(-280px), 250ms easeIn
+    backdrop: opacity 0.4→0, 200ms
+
+Mobile Drawer nav links:
+  → same destinations as desktop navbar equivalents (Push Left 300ms each)
+
+═══════════════════════════════════════
+GLOBAL RULES FOR ALL CONNECTIONS
+═══════════════════════════════════════
+
+1. All modals: trigger = On Click, animation = Smart Animate scale 0.96→1 + opacity 0→1, 200ms easeOut. Close = reverse, 150ms easeIn.
+2. All "back" navigation (← links): Push Right, 300ms easeOut.
+3. All "forward" navigation (→ links, CTAs): Push Left, 300ms easeOut.
+4. All dropdown overlays: translateY(-8px)→translateY(0) + opacity 0→1, 200ms easeOut.
+5. All page-enter: opacity 0→1, translateY 20px→0, 400ms easeOut. Apply to every new page arrival.
+6. Buttons on press (all): scale 0.98, 150ms ease (Smart Animate).
+7. Toast notifications: translateX(40px)→translateX(0) + opacity 0→1, 300ms easeOut. Fixed bottom-right.
+8. Total minimum connections: 68. Verify count in Figma prototype panel before handover.
